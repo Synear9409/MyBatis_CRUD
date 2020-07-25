@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"/>
+</head>
+<body>
+
+    <div class="ui container" style="margin-top: 100px">
+        <h2 class="ui center aligned icon header">
+            <i class="circular fort awesome icon"></i>
+            列表主页
+        </h2>
+        <div class="ui secondary segment form">
+            <div class="inline fields">
+                <div class="field">
+                    <form id="search-form" action="#" th:action="@{/search}" method="post">
+                        <div class="ui input inline">
+                            <input type="text" name="query" required placeholder="search...">
+                        </div>
+                        <div class="ui input">
+                            <input type="submit" value="提交" class="ui teal button" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="field">
+                    <a class="ui blue basic button" th:href="@{/input}">新增</a>
+                </div>
+            </div>
+        </div>
+            <table th:fragment="tableList" class="ui selectable inverted table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>姓名</th>
+                        <th>地址</th>
+                        <th>电话</th>
+                        <th>性别</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="students : ${pageInfo.list}">
+                        <td th:text="${students.studentId}">James</td>
+                        <td th:text="${students.name}">24</td>
+                        <td th:text="${students.address}">Engineer</td>
+                        <td th:text="${students.phone}">Engineer</td>
+                        <td th:text="${students.sex} == 1 ? '男' : '女'">Engineer</td>
+                        <td>
+                            <a class="ui blue mini button" th:href="@{/input/{id}(id = ${students.studentId})}">编辑</a>
+                            <a class="ui red mini button" th:href="@{/delete/{id}(id = ${students.studentId})}" onclick="return confirm('确定要删除吗')">删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="7">
+                            <div class="ui right floated pagination menu" th:if="${query} == null">
+                                <a th:href="@{/index(pagenum = ${pageInfo.hasPreviousPage} ? ${pageInfo.prePage}: 1)}" class="icon item">上一页</a>
+                                <a th:href="@{/index(pagenum = ${pageInfo.hasNextPage} ? ${pageInfo.nextPage}: ${pageInfo.pages})}" class="icon item">下一页</a>
+                            </div>
+                            <div class="ui pagination menu" th:if="${query}">
+                                <a th:href="@{'/search/'+${query}(pagenum = ${pageInfo.hasPreviousPage} ? ${pageInfo.prePage}: 1)}" class="icon item">上一页</a>
+                                <a th:href="@{'/search/'+${query}(pagenum = ${pageInfo.hasNextPage} ? ${pageInfo.nextPage}: ${pageInfo.pages})}" class="icon item">下一页</a>
+                            </div>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+    </div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--<script>
+        $('#searchi').click(function () {
+            $("#search-form").submit();
+        });
+    </script>-->
+</body>
+</html>

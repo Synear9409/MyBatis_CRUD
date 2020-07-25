@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"/>
+</head>
+<body>
+    <div class="ui container" style="margin-top: 200px">
+        <h2 class="ui header">
+            <i class="edit icon"></i>
+            <div class="content">
+                <span th:text="${stu.studentId} != null ? '修改页面' : '新增页面'">新增页面</span>
+            </div>
+        </h2>
+        <form class="ui segment inverted form" id="insert" th:object="${stu}" th:action="@{/postInput}" method="post">
+            <!--谨记 name属性的id 必须是和mybatis设置的映射名是一样的-->
+            <input type="hidden" name="studentId" th:value="*{studentId} != null ? *{studentId}"/>
+            <div class="required field">
+                <div class="ui labeled input">
+                    <label class="ui basic black label">姓名</label>
+                    <input type="text" name="name" th:value="*{name}" >
+                </div>
+            </div>
+            <div class="required field">
+                <div class="ui labeled input">
+                    <label class="ui basic black label">地址</label>
+                    <input type="text" name="address" th:value="*{address}" >
+                </div>
+            </div>
+            <div class="required field">
+                <div class="ui labeled input">
+                    <label class="ui basic black label">电话</label>
+                    <input type="text" name="phone" th:value="*{phone}" >
+                </div>
+            </div>
+            <div class="required field">
+                <div class="ui labeled input">
+                    <label class="ui basic black label">性别</label>
+                    <input type="text" name="sex" th:value="*{sex}" >
+                </div>
+            </div>
+            <div class="ui container">
+                <button id="save" class="ui center aligned teal button">保存</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $('#save-btn').click(function () {
+        $("#blog-form").submit();
+    })
+</script>
+</html>
